@@ -1,20 +1,23 @@
 const router = require("express").Router();
+const { request } = require("express");
 let  User = require("../models/userModel")
 
 
 //User Registration
-//http://localhost:8020/user/add
-router.route("/add").post((req,res)=>{
-    const fname = req.body.fname;
-    const lname = req.body.lname;
+//http://localhost:8020/user/register
+router.route("/register").post((req,res)=>{
+    const firstName = req.body.firstName;
+    const lastName = req.body.lastName;
+    const NIC = req.body.NIC;
     const email = req.body.email;
     const contact = req.body.contact;
     const password = req.body.password;
 
 
     const newUser = new  User({
-        fname,
-        lname,
+        firstName,
+        lastName,
+        NIC,
         email,
         contact,
         password
@@ -42,10 +45,11 @@ router.route("/").get((req,res)=>{
 //http://localhost:8090/user/update/:id
 router.route("/update/:id").put(async (req,res)=>{
     let userId = req.params.id;
-    const {fname,lname,email,contact,password} = req.body;
+    const {name,age,gender,email,contact,password} = req.body;
     const updateUser = {
-        fname,
-        lname,
+        name,
+        age,
+        gender,
         email,
         contact,
         password
