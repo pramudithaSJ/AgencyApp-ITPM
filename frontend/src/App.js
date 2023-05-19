@@ -7,6 +7,8 @@ import UpdateProfile from "./User/UpdateProfile";
 import SingleAgencyView from "./Review/agencyView";
 import "bootstrap/dist/css/bootstrap.min.css";
 import MyReviews from "./Review/myreview";
+import Sidebar from "./Admin/dashboard";
+import AllUsers from "./Admin/AllUsers";
 
 function App() {
   return (
@@ -17,6 +19,8 @@ function App() {
           <Route path = "/login" exact element={<Login/>}/>
           <Route path = "/myprofile" exact element={<MyProfile/>}/>
           <Route path = "/updateprofile" exact element={<UpdateProfile/>}/>
+          <Route path = "/sidebar" exact element={<Sidebar/>}/>
+          <Route path = "/allusers" exact element={<AllUsers/>}/>
          
           <Route path="/myReviews" exact element={<MyReviews />} />
         </Routes>
