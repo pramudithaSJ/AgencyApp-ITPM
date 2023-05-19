@@ -35,9 +35,11 @@ export default function MyReviews() {
   const [reviewData, setReviewData] = React.useState();
   const [modalIsOpen, setIsOpen] = React.useState(false);
   const [reviewId, setReviewId] = React.useState();
+
+  const userId = localStorage.getItem("id");
   React.useEffect(() => {
     axios
-      .get("http://localhost:8020/review/agency/64672076731b0c2bea5f4953")
+      .get(`http://localhost:8020/review/${userId}`)
       .then((res) => {
         setReviewData(res.data);
       })

@@ -34,6 +34,7 @@ const validationSchema = Yup.object({
 export default function SimpleAccordion() {
   const [reviewData, setReviewData] = React.useState();
   const [modalIsOpen, setIsOpen] = React.useState(false);
+  const userId = localStorage.getItem("id");
   React.useEffect(() => {
     axios
       .get("http://localhost:8020/review/agency/64672076731b0c2bea5f4954")
@@ -52,7 +53,7 @@ export default function SimpleAccordion() {
       .post(`http://localhost:8020/review/add/64672076731b0c2bea5f4954`, {
         review: values.review,
         rating: values.rating,
-        userId: localStorage.getItem("id"),
+        userId: userId,
       })
       .then((response) => {
         console.log(response);
@@ -86,7 +87,7 @@ export default function SimpleAccordion() {
         </AccordionSummary>
         <AccordionDetails>
           <Typography>
-            <div className="overflow-auto">
+            <div className="overflow-auto h-150">
               {reviewData &&
                 reviewData.map((review, index) => (
                   <div className="bg-gray-200 my-2 py-2 px-3 " key={index}>
