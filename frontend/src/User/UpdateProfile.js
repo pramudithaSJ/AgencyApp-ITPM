@@ -5,14 +5,16 @@ const UpdateProfile = () => {
   const [userData, setUserData] = useState({
     firstName: "",
     lastName: "",
+    NIC:"",
     email: "",
     contact: "",
+    password:""
   });
 
   const [editMode, setEditMode] = useState(false);
 
   useEffect(() => {
-    const userId = localStorage.getItem("id")
+    const userId = localStorage.getItem("id");
     console.log(userId);
     // Fetch user details from the backend
     const fetchUserData = async () => {
@@ -37,13 +39,14 @@ const UpdateProfile = () => {
   };
 
   const handleEdit = () => {
+    console.log("dd");
     setEditMode(true);
   };
 
   const handleSave = async () => {
     try {
       // Send updated user data to the backend
-      await axios.put("YOUR_BACKEND_API_ENDPOINT", userData);
+      await axios.put("http://localhost:8090/user/update/:id", userData);
       setEditMode(false);
       // Optionally display a success message or perform any other actions
     } catch (error) {
@@ -85,6 +88,20 @@ const UpdateProfile = () => {
           />
         </div>
         <div className="mb-4">
+          <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="lastName">
+            NIC
+          </label>
+          <input
+            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            type="text"
+            id="NIC"
+            name="NIC"
+            value={userData.NIC}
+            readOnly={!editMode}
+            onChange={handleChange}
+          />
+        </div>
+        <div className="mb-4">
           <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="email">
             Email
           </label>
@@ -112,6 +129,20 @@ const UpdateProfile = () => {
             onChange={handleChange}
           />
         </div>
+        <div className="mb-4">
+          <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="password">
+            Password
+          </label>
+          <input
+            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            type="text"
+            id="password"
+            name="password"
+            value={userData.password}
+            readOnly={!editMode}
+            onChange={handleChange}
+          />
+        </div>
         {editMode ? (
           <div className="flex justify-center">
             <button
@@ -124,7 +155,7 @@ const UpdateProfile = () => {
         ) : (
           <div className="flex justify-center">
             <button
-              className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+              className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="button"
               onClick={handleEdit}
             >
               Edit
