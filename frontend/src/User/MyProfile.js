@@ -32,7 +32,13 @@ const MyProfile = () => {
     fetchUserData();
   }, []);
 
-  const handleClick = () => {
+  const handleClickUpdate = () => {
+    navigate("/updateprofile");
+  };
+  const handleClickCV = () => {
+    navigate("/updateprofile");
+  };
+  const handleClickReview = () => {
     navigate("/updateprofile");
   };
 
@@ -119,11 +125,14 @@ const MyProfile = () => {
           />
         </div>
         <div className="mt-5"></div>
-        <button className="bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-2 px-4 ml-6 rounded focus:outline-none focus:shadow-outline w-1/3" onClick={handleClick}>
+        <button className="bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-2 px-4  rounded focus:outline-none focus:shadow-outline w-1/4" onClick={handleClickUpdate}>
             Update
-        </button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-        <button className="bg-green-700 hover:bg-green-900 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline w-1/3" onClick={handleClick}>
+        </button>&nbsp;&nbsp;&nbsp;
+        <button className="bg-green-700 hover:bg-green-900 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline w-1/3" onClick={handleClickCV}>
             Upload CV
+        </button>&nbsp;&nbsp;&nbsp;&nbsp;
+        <button className="bg-red-700 hover:bg-red-900 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline w-1/3" onClick={handleClickReview}>
+            My Reviews
         </button>
       </form>
     </div>
