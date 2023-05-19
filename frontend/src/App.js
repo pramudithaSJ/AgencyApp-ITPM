@@ -5,7 +5,8 @@ import Login from "./User/Login";
 import MyProfile from "./User/MyProfile";
 import UpdateProfile from "./User/UpdateProfile";
 import SingleAgencyView from "./Review/agencyView";
-import 'bootstrap/dist/css/bootstrap.min.css';
+import "bootstrap/dist/css/bootstrap.min.css";
+import MyReviews from "./Review/myreview";
 import Sidebar from "./Admin/dashboard";
 import AllUsers from "./Admin/AllUsers";
 
@@ -21,6 +22,7 @@ function App() {
           <Route path = "/sidebar" exact element={<Sidebar/>}/>
           <Route path = "/allusers" exact element={<AllUsers/>}/>
          
+          <Route path="/myReviews" exact element={<MyReviews />} />
         </Routes>
       </BrowserRouter>
     </div>
