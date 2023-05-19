@@ -1,64 +1,81 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
-const UpdateProfile = () => {
-  const [userData, setUserData] = useState({
-    firstName: "",
-    lastName: "",
-    NIC:"",
-    email: "",
-    contact: "",
-    password:""
-  });
 
-  const [editMode, setEditMode] = useState(false);
+const Update = () => {
 
-  useEffect(() => {
-    const userId = localStorage.getItem("id");
-    console.log(userId);
-    // Fetch user details from the backend
-    const fetchUserData = async () => {
-      try {
-        const response = await axios.get(`http://localhost:8020/user/get/${userId}`);
-        const user = response.data; // Assuming the response contains user details
-        setUserData(user);
-      } catch (error) {
-        console.log(error);
-      }
-    };
+    const navigate = useNavigate();
+    let id = localStorage.getItem("id")
+    
+    const [user, setuser] = useState([]);
+    const [firstName, setfirstName] = useState("");
+    const [lastName, setlastName] = useState("");
+    const [NIC, setNIC] = useState("");
+    const [email, setemail] = useState("");
+    const [contact, setcontact] = useState("");
+    const [password, setpassword ]= useState("");
 
-    fetchUserData();
-  }, []);
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setUserData((prevState) => ({
-      ...prevState,
-      [name]: value,
-    }));
-  };
+    useEffect(() => {
+        // const loggedInUser = localStorage.getItem("user");
+        // console.log(loggedInUser);
 
-  const handleEdit = () => {
-    console.log("dd");
-    setEditMode(true);
-  };
+        function getUser() {
+            axios.get("http://localhost:8020/user/get/" + id).then((res) => {
+                setuser(res.data);
+                console.log(res.data);
+            }).catch((err) => {
+            })
+        }
 
-  const handleSave = async () => {
-    try {
-      // Send updated user data to the backend
-      await axios.put("http://localhost:8090/user/update/:id", userData);
-      setEditMode(false);
-      // Optionally display a success message or perform any other actions
-    } catch (error) {
-      console.log(error);
-      // Optionally display an error message or perform any other actions
+        getUser();
+    }, []);
+
+    const firstNameSetter = (e) => {
+        setfirstName(e.target.value);
     }
-  };
+    const lastNameSetter = (e) => {
+        setlastName(e.target.value);
+    }
+    const NICSetter = (e) => {
+        setNIC(e.target.value);
+    }
+    const emailSetter = (e) => {
+        setemail(e.target.value);
+    }
+    const contactSetter = (e) => {
+        setcontact(e.target.value);
+    }
 
+    const passwordSetter = (e) => {
+        setpassword(e.target.value);
+    }
+
+    const onSubmit = () => {
+        const UpdateUser = {
+            firstName: firstName,
+            lastName: lastName,
+            NIC: NIC,
+            contact: contact,
+            email: email,
+            password: password
+        };
+        navigate("/myprofile");
+        // const loggedInUser = localStorage.getItem("user");
+        // console.log(loggedInUser);
+        axios.put('http://localhost:8020/user/updateOne/' + id, UpdateUser).then(() => {
+
+            alert("Updated successfully!!!");
+
+        }).catch((err) => {
+            alert(err);
+        })
+    }
   return (
     <div className="flex items-center justify-center h-screen">
-      <form className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
-        <h2 className="text-2xl font-bold mb-6 text-center">My Profile</h2>
+      <form className="bg-gray-300 shadow-md rounded px-8 pt-6 pb-8 mb-4 w-1/3">
+        <h2 className="text-2xl font-bold mb-6 text-center">Update Profile</h2>
         <div className="mb-4">
           <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="firstName">
             First Name
@@ -68,9 +85,9 @@ const UpdateProfile = () => {
             type="text"
             id="firstName"
             name="firstName"
-            value={userData.firstName}
-            readOnly={!editMode}
-            onChange={handleChange}
+            placeholder={user.firstName}
+           
+            onChange={firstNameSetter}
           />
         </div>
         <div className="mb-4">
@@ -82,9 +99,9 @@ const UpdateProfile = () => {
             type="text"
             id="lastName"
             name="lastName"
-            value={userData.lastName}
-            readOnly={!editMode}
-            onChange={handleChange}
+            placeholder={user.lastName}
+           
+            onChange={lastNameSetter}
           />
         </div>
         <div className="mb-4">
@@ -96,9 +113,9 @@ const UpdateProfile = () => {
             type="text"
             id="NIC"
             name="NIC"
-            value={userData.NIC}
-            readOnly={!editMode}
-            onChange={handleChange}
+            placeholder={user.NIC}
+           
+            onChange={NICSetter}
           />
         </div>
         <div className="mb-4">
@@ -110,9 +127,9 @@ const UpdateProfile = () => {
             type="email"
             id="email"
             name="email"
-            value={userData.email}
-            readOnly={!editMode}
-            onChange={handleChange}
+            placeholder={user.email}
+           
+            onChange={emailSetter}
           />
         </div>
         <div className="mb-4">
@@ -124,9 +141,9 @@ const UpdateProfile = () => {
             type="text"
             id="contact"
             name="contact"
-            value={userData.contact}
-            readOnly={!editMode}
-            onChange={handleChange}
+            placeholder={user.contact}
+           
+            onChange={contactSetter}
           />
         </div>
         <div className="mb-4">
@@ -138,12 +155,12 @@ const UpdateProfile = () => {
             type="text"
             id="password"
             name="password"
-            value={userData.password}
-            readOnly={!editMode}
-            onChange={handleChange}
+            placeholder={user.password}
+           
+            onChange={passwordSetter}
           />
         </div>
-        {editMode ? (
+        {/* {editMode ? (
           <div className="flex justify-center">
             <button
               className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
@@ -155,16 +172,25 @@ const UpdateProfile = () => {
         ) : (
           <div className="flex justify-center">
             <button
-              className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="button"
-              onClick={handleEdit}
+              className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit"
+              onClick={onSubmit}
             >
-              Edit
+              Update
             </button>
           </div>
-        )}
+        )} */}
+
+        <div className="flex justify-center">
+            <button
+              className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit"
+              onClick={onSubmit}
+            >
+              Update
+            </button>
+        </div>
       </form>
     </div>
   );
 };
 
-export default UpdateProfile;
+export default Update;

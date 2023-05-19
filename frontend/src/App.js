@@ -13,15 +13,11 @@ function App() {
     <div className="App">
       <BrowserRouter>
         <Routes>
-          <Route path="/register" exact element={<RegisterForm />} />
-          <Route path="/login" exact element={<Login />} />
-          <Route path="/myprofile" exact element={<MyProfile />} />
-          <Route path="/updateprofile" exact element={<UpdateProfile />} />
-          <Route
-            path="/singleagencyview"
-            exact
-            element={<SingleAgencyView />}
-          />
+          <Route path = "/register" exact element={<RegisterForm/>}/>
+          <Route path = "/login" exact element={<Login/>}/>
+          <Route path = "/myprofile" exact element={<MyProfile/>}/>
+          <Route path = "/updateprofile" exact element={<UpdateProfile/>}/>
+         
           <Route path="/myReviews" exact element={<MyReviews />} />
         </Routes>
       </BrowserRouter>
