@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import AllUsers from "./AllUsers";
-
+import AllReviews from "./AllReviews";
 
 export default function Sidebar() {
   const [open, setOpen] = useState(false);
@@ -11,10 +11,8 @@ export default function Sidebar() {
     <div className="flex">
       <div
         className={` ${
-
           open ? "w-56" : "w-80 "
         } flex flex-col h-screen p-3 bg-blue-950 shadow duration-300`}
-
       >
         <div className="space-y-3">
           <div className="flex items-center justify-between">
@@ -83,7 +81,29 @@ export default function Sidebar() {
                   <span className="text-gray-100">Users</span>
                 </button>
               </li>
-            
+              <li className="rounded-sm">
+                <button
+                  onClick={() => setSelectedField("reviews")}
+                  className="flex items-center p-2 space-x-3 rounded-md hover:bg-blue-800 w-full"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    className="w-6 h-6 text-gray-100"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                    strokeWidth={2}
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4"
+                    />
+                  </svg>
+                  <span className="text-gray-100">Reviews</span>
+                </button>
+              </li>
+
               <li className="rounded-sm">
                 <button
                   onClick={() => {
@@ -141,9 +161,9 @@ export default function Sidebar() {
             </div>
           </div>
         ) : null}
-       
+
         {selectedField === "users" ? <AllUsers /> : null}
-   
+        {selectedField === "reviews" ? <AllReviews /> : null}
       </div>
     </div>
   );

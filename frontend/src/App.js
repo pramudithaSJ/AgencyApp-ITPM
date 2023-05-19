@@ -20,7 +20,8 @@ function App() {
           <Route path = "/myprofile" exact element={<MyProfile/>}/>
           <Route path = "/updateprofile" exact element={<UpdateProfile/>}/>
           <Route path = "/sidebar" exact element={<Sidebar/>}/>
-          <Route path = "/allusers" exact element={<AllUsers/>}/>
+          <Route path = "/singleagencyview" exact element={<SingleAgencyView/>}/>
+      
          
           <Route path="/myReviews" exact element={<MyReviews />} />
         </Routes>
