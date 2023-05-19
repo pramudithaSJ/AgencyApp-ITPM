@@ -36,7 +36,7 @@ const MyProfile = () => {
     navigate("/updateprofile");
   };
   const handleClickCV = () => {
-    navigate("/updateprofile");
+    navigate("/myCv");
   };
   const handleClickReview = () => {
     navigate("/myreviews");

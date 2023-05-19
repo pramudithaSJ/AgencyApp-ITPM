@@ -45,6 +45,9 @@ app.use("/user", userRouter);
 const reviewRouter = require("./routes/reviewRoute");
 app.use("/review", reviewRouter);
 
+const cvRouter = require("./routes/uploadCvRoute");
+app.use("/cv", cvRouter);
+
 //run the app using portd
 app.listen(PORT, () => {
   console.log(`Server is up and running on port number: ${PORT}`);

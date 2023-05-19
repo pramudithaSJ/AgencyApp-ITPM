@@ -12,12 +12,13 @@ const storage = multer.diskStorage({
     cb(null, filename);
   },
 });
+const upload = multer({ storage: storage });
 
 // Create the Multer instance
 
 router.post("/upload-cv", upload.single("cv"), (req, res) => {
-  const cvFile = req.file; // The uploaded CV file
-  const userId = req.user.id; // Assuming you have a user authentication system and can access the user ID
+  const cvFile = req.body.cv; // The uploaded CV file
+  const userId = req.body.userId; // Assuming you have a user authentication system and can access the user ID
 
   // Save the CV details to the CV collection
   const cv = new CV({
@@ -34,6 +35,5 @@ router.post("/upload-cv", upload.single("cv"), (req, res) => {
       res.status(500).send("An error occurred while uploading the CV.");
     });
 });
-const upload = multer({ storage: storage });
 
 module.exports = router;
