@@ -112,5 +112,22 @@ router.route("/get/:id").get((req,res)=>{
     })
 })
 
+//Updateone
+router.route("/updateOne/:id").put(async (req, res) => {
+    let user = await User.findById(req.params.id);
+    const data = {
+        firstName: req.body.firstName || user.firstName,
+        lastName: req.body.lastName || user.lastName,
+        NIC: req.body.NIC || user.NIC,
+        email: req.body.email || user.email,
+        contact: req.body.contact || user.contact,
+        password: req.body.password || user.password,
+
+
+    };
+    user = await User.findByIdAndUpdate(req.params.id, data, { new: true });
+    res.json(user);
+});
+
 
 module.exports = router;

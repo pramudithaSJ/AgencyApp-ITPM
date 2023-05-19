@@ -15,6 +15,7 @@ function App() {
           <Route path = "/login" exact element={<Login/>}/>
           <Route path = "/myprofile" exact element={<MyProfile/>}/>
           <Route path = "/updateprofile" exact element={<UpdateProfile/>}/>
+         
         </Routes>
       </BrowserRouter>
     </div>
