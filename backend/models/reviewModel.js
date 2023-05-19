@@ -8,17 +8,15 @@ const ReviewSchema = new Schema({
   rating: {
     type: Number,
   },
-  user: {
-    type: Schema.Types.ObjectId,
-    ref: "user",
-  },
-  agency: {
-    type: Schema.Types.ObjectId,
-    ref: "agency",
+  userId: {
+    type: String,
   },
   date: {
     type: Date,
     default: Date.now,
+  },
+  agencyId: {
+    type: String,
   },
 });
 

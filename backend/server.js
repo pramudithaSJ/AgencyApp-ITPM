@@ -42,6 +42,9 @@ connection.once("open", () => {
 const userRouter = require("./routes/userRoute");
 app.use("/user", userRouter);
 
+const reviewRouter = require("./routes/reviewRoute");
+app.use("/review", reviewRouter);
+
 //run the app using portd
 app.listen(PORT, () => {
   console.log(`Server is up and running on port number: ${PORT}`);
