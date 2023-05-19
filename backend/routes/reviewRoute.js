@@ -1,67 +1,88 @@
 const router = require("express").Router();
 const { request } = require("express");
-let Review = require("../models/reviewModel");
+const Review = require("../models/reviewModel");
 
-// add review
-// http://localhost:8020/review/add/:agencyId
-router.route("/add/:agencyId").post(async (req, res) => {
-  try {
-    const { review, rating, userId } = req.body;
-    const agencyId = req.params.agencyId;
+//add review
+//http://localhost:8090/review/add
 
-    const agency = await Review.findById(agencyId);
-    // if (!agency) {
-    //   return res.status(404).json({ message: "Agency not found" });
-    // }
+router.route("/add/:agencyId").post((req, res) => {
+  const review = req.body.review;
+  const rating = req.body.rating;
+  const userId = req.body.userId;
+  const agencyId = req.params.agencyId; // Get agencyId from URL parameter
 
-    if (!agency.reviews || agency.reviews.length === 0) {
-      // If agency has no reviews or the reviews array is empty, create a new review
-      const newReview = new Review({
-        reviews: [
-          {
-            review,
-            rating,
-            userId,
-          },
-        ],
-        agencyId,
-      });
-      const savedReview = await newReview.save();
-      return res.status(201).json(savedReview);
-    } else {
-      // If agency already has reviews, add the new review to the existing reviews array
-      const newReview = {
-        review,
-        rating,
-        userId,
-      };
-      agency?.reviews.push(newReview);
-      const updatedAgency = await agency.save();
-      return res.status(200).json(updatedAgency.reviews);
-    }
-  } catch (err) {
-    console.log(err);
-    res.status(500).json({ message: "Internal server error" });
-  }
-});
+  const newReview = new Review({
+    review,
+    rating,
+    userId,
+    agencyId,
+  });
 
-// Get reviews by user ID
-// http://localhost:8020/review/user/:userId
-router.route("/user/:userId").get((req, res) => {
-  const userId = req.params.userId;
-
-  Review.find({ user: userId })
-    .then((reviews) => {
-      const reviewObject = {};
-      reviews.forEach((review) => {
-        reviewObject[review._id] = review;
-      });
-      res.json(reviewObject);
+  newReview
+    .save()
+    .then(() => {
+      res.json("Review Added Successfully");
     })
     .catch((err) => {
       console.log(err);
-      res.status(500).json("An error occurred while retrieving the reviews");
     });
 });
 
+//fetch reviews
+//http://localhost:8090/review/
+router.route("/").get((req, res) => {
+  Review.find()
+    .then((review) => {
+      res.json(review);
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+});
+
+router.route("/:userId").get((req, res) => {
+  const userId = req.params.userId; // Get userId from URL parameter
+
+  Review.find({ userId })
+    .then((reviews) => {
+      res.json(reviews);
+    })
+    .catch((err) => {
+      console.log(err);
+      res
+        .status(500)
+        .json({ error: "An error occurred while fetching reviews." });
+    });
+});
+router.route("/agency/:agencyId").get((req, res) => {
+  const agencyId = req.params.agencyId; // Get agencyId from URL parameter
+
+  Review.find({ agencyId })
+    .then((reviews) => {
+      res.json(reviews);
+    })
+    .catch((err) => {
+      console.log(err);
+      res.status(500).json({ error: "An error occurred while fetching reviews." });
+    });
+});
+
+router.route("/reviews/:reviewId").put((req, res) => {
+  const reviewId = req.params.reviewId; // Get reviewId from URL parameter
+  const updatedReview = req.body.review;
+  const updatedRating = req.body.rating;
+
+  Review.findByIdAndUpdate(
+    reviewId,
+    { review: updatedReview, rating: updatedRating },
+    { new: true }
+  )
+    .then((review) => {
+      res.json(review);
+    })
+    .catch((err) => {
+      console.log(err);
+      res.status(500).json({ error: "An error occurred while updating the review." });
+    });
+});
 module.exports = router;
