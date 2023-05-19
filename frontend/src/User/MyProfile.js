@@ -38,7 +38,7 @@ const MyProfile = () => {
 
   return (
     <div className="flex items-center justify-center h-screen">
-      <form className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+      <form className="bg-gray-200 shadow-md rounded px-8 pt-6 pb-8 mb-4 w-1/3">
         <h2 className="text-2xl font-bold mb-6 text-center">My Profile</h2>
         <div className="mb-4">
           <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="firstName">
@@ -118,10 +118,11 @@ const MyProfile = () => {
             readOnly
           />
         </div>
-        <button className="bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" onClick={handleClick}>
+        <div className="mt-5"></div>
+        <button className="bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-2 px-4 ml-6 rounded focus:outline-none focus:shadow-outline w-1/3" onClick={handleClick}>
             Update
-        </button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-        <button className="bg-green-700 hover:bg-green-900 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" onClick={handleClick}>
+        </button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <button className="bg-green-700 hover:bg-green-900 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline w-1/3" onClick={handleClick}>
             Upload CV
         </button>
       </form>
