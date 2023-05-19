@@ -5,14 +5,16 @@ const UpdateProfile = () => {
   const [userData, setUserData] = useState({
     firstName: "",
     lastName: "",
+    NIC:"",
     email: "",
     contact: "",
+    password:""
   });
 
   const [editMode, setEditMode] = useState(false);
 
   useEffect(() => {
-    const userId = localStorage.getItem("id")
+    const userId = localStorage.getItem("id");
     console.log(userId);
     // Fetch user details from the backend
     const fetchUserData = async () => {
@@ -43,7 +45,7 @@ const UpdateProfile = () => {
   const handleSave = async () => {
     try {
       // Send updated user data to the backend
-      await axios.put("YOUR_BACKEND_API_ENDPOINT", userData);
+      await axios.put("http://localhost:8090/user/update/:id", userData);
       setEditMode(false);
       // Optionally display a success message or perform any other actions
     } catch (error) {
@@ -85,6 +87,20 @@ const UpdateProfile = () => {
           />
         </div>
         <div className="mb-4">
+          <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="lastName">
+            NIC
+          </label>
+          <input
+            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            type="text"
+            id="NIC"
+            name="NIC"
+            value={userData.NIC}
+            readOnly={!editMode}
+            onChange={handleChange}
+          />
+        </div>
+        <div className="mb-4">
           <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="email">
             Email
           </label>
@@ -108,6 +124,20 @@ const UpdateProfile = () => {
             id="contact"
             name="contact"
             value={userData.contact}
+            readOnly={!editMode}
+            onChange={handleChange}
+          />
+        </div>
+        <div className="mb-4">
+          <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="password">
+            Password
+          </label>
+          <input
+            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            type="text"
+            id="password"
+            name="password"
+            value={userData.password}
             readOnly={!editMode}
             onChange={handleChange}
           />
