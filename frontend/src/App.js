@@ -5,7 +5,8 @@ import Login from "./User/Login";
 import MyProfile from "./User/MyProfile";
 import UpdateProfile from "./User/UpdateProfile";
 import SingleAgencyView from "./Review/agencyView";
-import 'bootstrap/dist/css/bootstrap.min.css';
+import "bootstrap/dist/css/bootstrap.min.css";
+import MyReviews from "./Review/myreview";
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
             exact
             element={<SingleAgencyView />}
           />
+          <Route path="/myReviews" exact element={<MyReviews />} />
         </Routes>
       </BrowserRouter>
     </div>

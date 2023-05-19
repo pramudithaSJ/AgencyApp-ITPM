@@ -40,6 +40,25 @@ router.route("/").get((req, res) => {
     });
 });
 
+router.get("/reviews/:reviewId", (req, res) => {
+  const reviewId = req.params.reviewId; // Get reviewId from URL parameter
+
+  Review.findById(reviewId)
+    .then((review) => {
+      if (review) {
+        res.json(review);
+      } else {
+        res.status(404).json({ error: "Review not found." });
+      }
+    })
+    .catch((err) => {
+      console.log(err);
+      res
+        .status(500)
+        .json({ error: "An error occurred while retrieving the review." });
+    });
+});
+
 router.route("/:userId").get((req, res) => {
   const userId = req.params.userId; // Get userId from URL parameter
 
@@ -63,7 +82,9 @@ router.route("/agency/:agencyId").get((req, res) => {
     })
     .catch((err) => {
       console.log(err);
-      res.status(500).json({ error: "An error occurred while fetching reviews." });
+      res
+        .status(500)
+        .json({ error: "An error occurred while fetching reviews." });
     });
 });
 
@@ -71,10 +92,11 @@ router.route("/reviews/:reviewId").put((req, res) => {
   const reviewId = req.params.reviewId; // Get reviewId from URL parameter
   const updatedReview = req.body.review;
   const updatedRating = req.body.rating;
+  const updatedUserId = req.body.userId;
 
   Review.findByIdAndUpdate(
     reviewId,
-    { review: updatedReview, rating: updatedRating },
+    { review: updatedReview, rating: updatedRating, userId: updatedUserId },
     { new: true }
   )
     .then((review) => {
@@ -82,7 +104,27 @@ router.route("/reviews/:reviewId").put((req, res) => {
     })
     .catch((err) => {
       console.log(err);
-      res.status(500).json({ error: "An error occurred while updating the review." });
+      res
+        .status(500)
+        .json({ error: "An error occurred while updating the review." });
+    });
+});
+router.delete("/reviews/:reviewId", (req, res) => {
+  const reviewId = req.params.reviewId; // Get reviewId from URL parameter
+
+  Review.findByIdAndDelete(reviewId)
+    .then((deletedReview) => {
+      if (deletedReview) {
+        res.json({ message: "Review deleted successfully." });
+      } else {
+        res.status(404).json({ error: "Review not found." });
+      }
+    })
+    .catch((err) => {
+      console.log(err);
+      res
+        .status(500)
+        .json({ error: "An error occurred while deleting the review." });
     });
 });
 module.exports = router;
