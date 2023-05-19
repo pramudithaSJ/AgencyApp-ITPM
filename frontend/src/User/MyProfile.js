@@ -39,7 +39,7 @@ const MyProfile = () => {
     navigate("/updateprofile");
   };
   const handleClickReview = () => {
-    navigate("/updateprofile");
+    navigate("/myreviews");
   };
 
   return (
