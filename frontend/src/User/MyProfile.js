@@ -127,7 +127,7 @@ const MyProfile = () => {
         <div className="mt-5"></div>
         <button className="bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-2 px-4  rounded focus:outline-none focus:shadow-outline w-1/4" onClick={handleClickUpdate}>
             Update
-        </button>&nbsp;&nbsp;&nbsp;
+        </button>&nbsp;&nbsp;&nbsp;&nbsp;
         <button className="bg-green-700 hover:bg-green-900 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline w-1/3" onClick={handleClickCV}>
             Upload CV
         </button>&nbsp;&nbsp;&nbsp;&nbsp;
