@@ -4,8 +4,6 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 
-
-
 const customStyles = {
   content: {
     top: "50%",
@@ -20,8 +18,6 @@ const customStyles = {
 export default function AllUsers() {
   const navigate = useNavigate();
   const [items, setItems] = useState([]);
- 
- 
 
   useEffect(() => {
     axios
@@ -34,16 +30,43 @@ export default function AllUsers() {
         }
       })
       .catch((error) => toast.error(error));
-  }, [items]);
-
-  
+  }, []);
+  const handleSearch = (name) => {
+    if (name === "") {
+      // Display all items when search input is empty
+      axios
+        .get("http://localhost:8020/user/")
+        .then((response) => {
+          if (response) {
+            setItems(response.data);
+          } else {
+            toast.error("Error While Fetching Data!!");
+          }
+        })
+        .catch((error) => toast.error(error));
+    } else {
+      // Filter items based on the search input
+      const filteredItems = items.filter(
+        (item) =>
+          item.firstName &&
+          item.firstName.toLowerCase().includes(name.toLowerCase())
+      );
+      setItems(filteredItems);
+    }
+  };
 
   return (
     <section className="table-auto overflow-y-scroll h-screen pb-10">
       <div className="w-full bg-gray-100 py-10 text-center">
         <h1 className="text-2xl">User Details</h1>
       </div>
-      
+      <input
+        type="text"
+        placeholder="Search by name"
+        onChange={(e) => handleSearch(e.target.value)}
+        className="p-3 w-1/2 border-2 flex justify-center"
+      />
+
       <div className=" px-10 mt-10 ">
         <div class=" shadow-md sm:rounded-lg">
           <table class="w-full text-sm text-left text-gray-400 dark:text-gray-300 ">
@@ -72,10 +95,7 @@ export default function AllUsers() {
             <tbody>
               {items.map((item) => (
                 <tr class="bg-white border-b dark:bg-gray-100 dark:border-gray-200 hover:bg-gray-10 dark:hover:bg-gray-200">
-                  <td
-                    scope="row"
-                    class="px-6 py-4   dark:text-black"
-                  >
+                  <td scope="row" class="px-6 py-4   dark:text-black">
                     {item.firstName}
                   </td>
                   <td class="px-6 py-4 dark:text-black ">{item.lastName}</td>
@@ -83,15 +103,12 @@ export default function AllUsers() {
                   <td class="px-6 py-4 dark:text-black">{item.email}</td>
                   <td class="px-6 py-4 dark:text-black">{item.contact}</td>
                   <td class="px-6 py-4 dark:text-black">{item.password}</td>
-                  
                 </tr>
               ))}
             </tbody>
           </table>
         </div>
       </div>
-
-    
     </section>
   );
 }
